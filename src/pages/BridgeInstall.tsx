@@ -114,7 +114,7 @@ const BridgeInstall = () => {
             return (
               <Link
                 key={t.id}
-                to={`/bridge/${t.id}`}
+                to="/bridge/$os" params={{ os: t.id }}
                 onMouseEnter={() => setOs(t.id)}
                 className={`group relative border rounded-2xl p-5 transition-all hover:border-primary/60 hover:bg-primary/5 hover:-translate-y-0.5 ${
                   active ? "border-primary/50 bg-primary/5" : "hairline bg-card/40"
@@ -142,7 +142,7 @@ const BridgeInstall = () => {
             ▸ QUICK COMMANDS · {os.toUpperCase()}
           </h2>
           <Link
-            to={`/bridge/${os}`}
+            to="/bridge/$os" params={{ os }}
             className="font-mono text-[10px] tracking-[0.25em] text-primary hover:underline"
           >
             FULL GUIDE →

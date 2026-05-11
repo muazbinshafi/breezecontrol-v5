@@ -662,7 +662,7 @@ function BridgeSection() {
             return (
               <Link
                 key={p.id}
-                to={`/bridge/${p.id}`}
+                to="/bridge/$os" params={{ os: p.id }}
                 aria-label={`Open the full ${p.name} install guide`}
                 className="panel-elevated p-6 flex flex-col text-left transition-all hover:border-primary/50 hover:-translate-y-0.5 hover:shadow-lg group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
               >

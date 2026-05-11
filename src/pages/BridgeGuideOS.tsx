@@ -575,7 +575,7 @@ const BridgeGuideOS = () => {
             return (
               <Link
                 key={k}
-                to={`/bridge/${k}`}
+                to="/bridge/$os" params={{ os: k }}
                 className={`h-10 inline-flex items-center justify-center gap-2 font-mono text-[11px] tracking-[0.25em] transition-colors ${
                   active
                     ? "bg-primary/15 text-primary"
