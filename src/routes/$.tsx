@@ -1,26 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import NotFound from "@/pages/NotFound";
 
-// Catch-all (splat) — matches any URL path. Mounts <App /> which uses
-// react-router-dom's BrowserRouter to do the real client-side routing.
 export const Route = createFileRoute("/$")({
-  component: AppHost,
-  ssr: false,
+  component: NotFound,
 });
-
-function AppHost() {
-  const [App, setApp] = useState<React.ComponentType | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    import("@/App").then((mod) => {
-      if (!cancelled) setApp(() => mod.default);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  if (!App) return null;
-  return <App />;
-}

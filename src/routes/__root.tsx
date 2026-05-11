@@ -1,6 +1,16 @@
 import { Outlet, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "@/lib/theme/ThemeContext";
+import { AuthProvider } from "@/lib/auth/AuthContext";
+import { useCloudProfileSync } from "@/hooks/useCloudProfileSync";
 
 import appCss from "../styles.css?url";
+
+const queryClient = new QueryClient();
 
 export const Route = createRootRoute({
   head: () => ({
@@ -18,29 +28,21 @@ export const Route = createRootRoute({
       { name: "theme-color", content: "#fff7ed" },
       { name: "color-scheme", content: "light dark" },
       { name: "format-detection", content: "telephone=no" },
-      {
-        title: "BreezeControl — Touch-free gesture control for the web",
-      },
+      { title: "BreezeControl — Touch-free gesture control for the web" },
       {
         name: "description",
         content:
           "Control any website with a wave of your hand. Pinch, point and gesture in front of your camera — no install required.",
       },
       { property: "og:type", content: "website" },
-      {
-        property: "og:title",
-        content: "BreezeControl — Touch-free gesture control for the web",
-      },
+      { property: "og:title", content: "BreezeControl — Touch-free gesture control for the web" },
       {
         property: "og:description",
         content:
           "Control any website with a wave of your hand. Pinch, point and gesture in front of your camera — no install required.",
       },
       { name: "twitter:card", content: "summary_large_image" },
-      {
-        name: "twitter:title",
-        content: "BreezeControl — Touch-free gesture control for the web",
-      },
+      { name: "twitter:title", content: "BreezeControl — Touch-free gesture control for the web" },
       {
         name: "twitter:description",
         content:
@@ -57,8 +59,6 @@ export const Route = createRootRoute({
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },
-      // Preconnect to MediaPipe CDNs so the /demo model + WASM start
-      // their TLS handshake while the page is still loading.
       { rel: "preconnect", href: "https://cdn.jsdelivr.net", crossOrigin: "" },
       { rel: "preconnect", href: "https://storage.googleapis.com", crossOrigin: "" },
       { rel: "dns-prefetch", href: "https://cdn.jsdelivr.net" },
@@ -71,6 +71,7 @@ export const Route = createRootRoute({
   }),
   shellComponent: RootShell,
   component: RootComponent,
+  notFoundComponent: NotFound,
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
@@ -87,17 +88,52 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
+function CloudSyncBoot() {
+  useCloudProfileSync();
+  // Apply a shareable preset (?preset=...) once on first mount.
+  useEffect(() => {
+    const w = window as unknown as { __presetLoaded?: boolean };
+    if (w.__presetLoaded) return;
+    w.__presetLoaded = true;
+    import("@/lib/omnipoint/GestureSettingsShare").then((m) => m.loadPresetFromUrl());
+  }, []);
+  return null;
+}
+
 function RootComponent() {
-  if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-    const w = window as unknown as { __swReg?: boolean };
-    if (!w.__swReg) {
-      w.__swReg = true;
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/sw.js").catch(() => {
-          /* SW registration is best-effort; site still works without it */
-        });
-      });
-    }
-  }
-  return <Outlet />;
+  useEffect(() => {
+    if (!("serviceWorker" in navigator)) return;
+    navigator.serviceWorker.register("/sw.js").catch(() => {
+      /* SW registration is best-effort */
+    });
+  }, []);
+
+  return (
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <AuthProvider>
+            <CloudSyncBoot />
+            <Toaster />
+            <Sonner />
+            <Outlet />
+          </AuthProvider>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
+  );
+}
+
+function NotFound() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-muted">
+      <div className="text-center">
+        <h1 className="mb-4 text-4xl font-bold">404</h1>
+        <p className="mb-4 text-xl text-muted-foreground">Oops! Page not found</p>
+        <a href="/" className="text-primary underline hover:text-primary/90">
+          Return to Home
+        </a>
+      </div>
+    </div>
+  );
 }
