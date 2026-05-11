@@ -12,7 +12,7 @@
 // and the brand block sheds its non-essential metrics, so the row never
 // wraps or overlaps the underlying viewport.
 
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import {
   Activity,
   Crosshair,

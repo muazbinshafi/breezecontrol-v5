@@ -2,7 +2,7 @@
 // Google OAuth. Uses Supabase Cloud Auth.
 
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Hand, Loader2, ArrowRight, Mail, Lock, User as UserIcon, WifiOff } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { isSupabaseConfigured } from "@/integrations/supabase/configured";
@@ -32,7 +32,7 @@ const Auth = () => {
 
   // Already signed in? Send to demo.
   useEffect(() => {
-    if (!authLoading && session) navigate("/demo", { replace: true });
+    if (!authLoading && session) navigate({ to: "/demo", replace: true });
   }, [session, authLoading, navigate]);
 
   const handleEmail = async (e: React.FormEvent) => {
@@ -79,7 +79,7 @@ const Auth = () => {
       }
       if (result.redirected) return; // browser is navigating to Google
       // Token flow completed — AuthContext will pick up the new session.
-      navigate("/demo", { replace: true });
+      navigate({ to: "/demo", replace: true });
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Google sign-in failed";
       toast({ title: "Sign-in error", description: msg, variant: "destructive" });
@@ -169,7 +169,7 @@ const Auth = () => {
 
           {offline && (
             <button
-              onClick={() => navigate("/demo", { replace: true })}
+              onClick={() => navigate({ to: "/demo", replace: true })}
               className="w-full h-11 mb-4 inline-flex items-center justify-center gap-2 rounded-xl bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
             >
               Enter demo offline
