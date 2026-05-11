@@ -5,7 +5,7 @@
 // Reached from /bridge/windows, /bridge/macos, /bridge/linux.
 
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "@tanstack/react-router";
 import {
   ArrowLeft, Apple, Check, Copy, Cpu, ExternalLink, Github,
   Hand, Terminal, Download, ShieldCheck, Globe, PlayCircle, Package, Zap,
@@ -496,7 +496,8 @@ const isOS = (s: string | undefined): s is OS =>
   s === "windows" || s === "macos" || s === "linux";
 
 const BridgeGuideOS = () => {
-  const { os: osParam } = useParams();
+  const params = useParams({ strict: false }) as { os?: string };
+  const osParam = params.os;
   const navigate = useNavigate();
   const os: OS = isOS(osParam) ? osParam : "windows";
   const meta = OS_META[os];
@@ -507,7 +508,7 @@ const BridgeGuideOS = () => {
 
   useEffect(() => {
     document.title = `${meta.label} install guide — BreezeControl`;
-    if (!isOS(osParam)) navigate("/bridge", { replace: true });
+    if (!isOS(osParam)) navigate({ to: "/bridge", replace: true });
   }, [meta.label, osParam, navigate]);
 
   const copy = async (cmd: string) => {
