@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import { InitScreen } from "@/components/omnipoint/InitScreen";
 import { SensorPanel } from "@/components/omnipoint/SensorPanel";
 import { TelemetryPanel } from "@/components/omnipoint/TelemetryPanel";

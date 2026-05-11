@@ -2,7 +2,7 @@
 // triggers the native install prompt when the browser exposes one.
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import { Download, Smartphone, Apple, Share2, Plus, Check } from "lucide-react";
 
 interface BeforeInstallPromptEvent extends Event {

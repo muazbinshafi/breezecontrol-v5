@@ -3,7 +3,7 @@
 // already exchanged it for a temporary session, so we just call updateUser.
 
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Hand, Lock, Loader2, ArrowRight, CheckCircle2, AlertCircle, RotateCcw, LogIn } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -64,7 +64,7 @@ const ResetPassword = () => {
     setConfirm("");
   };
 
-  const goToSignIn = () => navigate("/auth", { replace: true });
+  const goToSignIn = () => navigate({ to: "/auth", replace: true });
 
   const showForm = status === "idle" || status === "submitting";
 

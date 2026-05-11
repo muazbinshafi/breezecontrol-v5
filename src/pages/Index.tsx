@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import { useEffect } from "react";
 import {
   Hand, MousePointer2, Zap, Shield, Activity, Sparkles, ArrowRight, Play, Github,

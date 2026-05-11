@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import jsPDF from "jspdf";
 import {

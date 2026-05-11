@@ -4,7 +4,7 @@
 // repository's bridge folder.
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import {
   Cpu, Copy, Check, Terminal, Apple, Hand, ChevronRight,
   ExternalLink, Download, Github, ShieldCheck,

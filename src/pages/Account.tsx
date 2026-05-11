@@ -3,7 +3,7 @@
 // gesture profiles they have synced.
 
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Hand, Loader2, LogOut, Save, User as UserIcon, Cloud } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/AuthContext";
@@ -67,7 +67,7 @@ const Account = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate("/", { replace: true });
+    navigate({ to: "/", replace: true });
   };
 
   return (
