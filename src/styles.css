@@ -491,6 +491,17 @@
   }
   .btn-bloom:hover::before { opacity: 0.55; }
 
+  /* Auto reveal-on-scroll for every <section> inside marketing pages.
+     Native scroll-driven animations; no-op on browsers without support. */
+  @supports (animation-timeline: view()) {
+    main > section {
+      animation: op-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 25%;
+    }
+    main > section:first-of-type { animation: none; }
+  }
+
   /* Accordion (replaces tailwindcss-animate keyframes) */
   @keyframes accordion-down {
     from { height: 0; }
