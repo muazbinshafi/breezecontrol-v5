@@ -1,26 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
+// Single mount point for the legacy react-router-dom App.
+// Previously both `/` and `/$` mounted <App />, which created two
+// BrowserRouter instances and produced the React "setState during render"
+// error from TanStack's Transitioner. Keeping only one mount fixes it.
 export const Route = createFileRoute("/")({
-  component: Index,
+  component: AppHost,
+  ssr: false,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+function AppHost() {
+  const [App, setApp] = useState<React.ComponentType | null>(null);
 
-function Index() {
-  return <PlaceholderIndex />;
+  useEffect(() => {
+    let cancelled = false;
+    import("@/App").then((mod) => {
+      if (!cancelled) setApp(() => mod.default);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (!App) return null;
+  return <App />;
 }
