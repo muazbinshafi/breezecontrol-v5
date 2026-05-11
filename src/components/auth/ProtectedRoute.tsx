@@ -3,7 +3,7 @@
 // avoid flicker. In Offline Mode, the gate is bypassed entirely so the
 // gesture/draw demo runs without any Supabase dependency.
 
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { useOfflineMode } from "@/lib/offlineMode";
@@ -11,7 +11,6 @@ import { useOfflineMode } from "@/lib/offlineMode";
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { session, loading } = useAuth();
   const offline = useOfflineMode();
-  const location = useLocation();
 
   if (offline) return <>{children}</>;
 
@@ -27,7 +26,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   }
 
   if (!session) {
-    return <Navigate to="/auth" replace state={{ from: location.pathname }} />;
+    return <Navigate to="/auth" replace />;
   }
 
   return <>{children}</>;
