@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/lib/theme/ThemeContext";
 import { AuthProvider } from "@/lib/auth/AuthContext";
 import { useCloudProfileSync } from "@/hooks/useCloudProfileSync";
+import { PageTransition } from "@/components/PageTransition";
 
 import appCss from "../styles.css?url";
 
@@ -116,7 +117,9 @@ function RootComponent() {
             <CloudSyncBoot />
             <Toaster />
             <Sonner />
-            <Outlet />
+            <PageTransition>
+              <Outlet />
+            </PageTransition>
           </AuthProvider>
         </TooltipProvider>
       </QueryClientProvider>
