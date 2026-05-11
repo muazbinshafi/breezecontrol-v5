@@ -109,35 +109,35 @@ function Hero() {
         <div className="grid lg:grid-cols-[1.1fr_1fr] gap-16 items-center">
           {/* Left: copy */}
           <div>
-            <div className="chip mb-6">
+            <div className="chip mb-6 animate-fade-up">
               <Sparkles className="w-3 h-3" />
               v2 · Customizable gestures · Paint mode · Mobile-ready
             </div>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl leading-[1.02] text-foreground">
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl leading-[1.02] text-foreground animate-fade-up delay-100">
               Wave hello to your<br />
-              new <span className="text-gradient">cursor</span>.
+              new <span className="text-gradient bg-[length:200%_100%] anim-gradient bg-clip-text text-transparent">cursor</span>.
             </h1>
-            <p className="mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed">
+            <p className="mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed animate-fade-up delay-200">
               BreezeControl turns any webcam into a friendly, touch-free input device.
               Pinch to click, point to move, draw in the air — on your laptop or your
               phone. Soft on the eyes, sharp on the cursor.
             </p>
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <Link to="/demo" className="btn-primary h-12 px-6 text-sm">
+            <div className="mt-9 flex flex-wrap items-center gap-3 animate-fade-up delay-300">
+              <Link to="/demo" className="btn-primary btn-bloom h-12 px-6 text-sm anim-glow-pulse">
                 <Play className="w-4 h-4 fill-current" />
                 Try it live
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link to="/guide" className="btn-ghost h-12 px-6 text-sm">
+              <Link to="/guide" className="btn-ghost h-12 px-6 text-sm hover-lift">
                 <Hand className="w-4 h-4" />
                 Gesture guide
               </Link>
-              <Link to="/install" className="btn-ghost h-12 px-6 text-sm">
+              <Link to="/install" className="btn-ghost h-12 px-6 text-sm hover-lift">
                 <Smartphone className="w-4 h-4" />
                 Install on phone
               </Link>
             </div>
-            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-muted-foreground animate-fade-up delay-500">
               <Stat label="FPS" value="60" />
               <Stat label="Latency" value="<16ms" />
               <Stat label="Gestures" value="11" />
@@ -146,9 +146,9 @@ function Hero() {
           </div>
 
           {/* Right: hero visual */}
-          <div className="relative">
-            <div className="absolute -inset-8 bg-gradient-primary opacity-20 blur-3xl rounded-full" />
-            <div className="relative panel-elevated overflow-hidden anim-float">
+          <div className="relative animate-fade-up delay-300">
+            <div className="absolute -inset-8 bg-gradient-primary opacity-20 blur-3xl rounded-full anim-pulse-soft" />
+            <div className="relative panel-elevated glow-border overflow-hidden anim-float">
               <div className="flex items-center justify-between px-4 h-10 border-b border-border bg-secondary/50">
                 <div className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-destructive/70" />
